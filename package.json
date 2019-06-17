@@ -11,7 +11,8 @@
     "build:fix-imports": "tslint --config lib/configs/tslint-fix-imports.json --fix --project .",
     "build:compile": "TARGET=web rollup -c && TARGET=native rollup -c && TARGET=sketchapp rollup -c",
     "build:copy": "shx cp package.json README.md CHANGELOG.md dist/",
-    "build": "npm run build:transpile && npm run build:fix-imports && npm run build:compile && npm run build:copy"
+    "build:prepare": "npm run build:empty && npm run build:transpile && npm run build:fix-imports",
+    "build": "npm run build:prepare && npm run build:compile && npm run build:copy"
   },
   "repository": "https://github.com/saschazar21/unicat-icons",
   "author": "Sascha Zarhuber <sascha.zarhuber@gmail.com>",
