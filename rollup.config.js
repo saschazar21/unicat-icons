@@ -1,4 +1,6 @@
-import { resolve } from 'path';
+import {
+  resolve
+} from 'path';
 import builtins from 'builtin-modules';
 import autoprefixer from 'autoprefixer';
 import babel from 'rollup-plugin-babel';
@@ -6,12 +8,17 @@ import commonjs from 'rollup-plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
 import postcss from 'rollup-plugin-postcss';
 import nodeResolve from 'rollup-plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
+import {
+  terser
+} from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 
 import pkg from './package.json';
 
-const { buildDir, distDir } = require('./lib/paths');
+const {
+  buildDir,
+  distDir
+} = require('./lib/paths');
 
 const distFile = file => resolve(distDir, `./${file}`);
 
@@ -42,7 +49,10 @@ const base = {
       include: /node_modules/,
     }),
     typescript(),
-    babel({ extensions: ['.ts', '.tsx'] }),
+    babel({
+      extensions: ['.ts', '.tsx'],
+      runtimeHelpers: true,
+    }),
     postcss({
       minimize: true,
       modules: {
@@ -58,11 +68,9 @@ const prodBase = {
   plugins: [...base.plugins, terser(), filesize()],
 };
 
-export default [
-  {
+export default [{
     ...base,
-    output: [
-      {
+    output: [{
         file: distFile(`${fileName}.js`),
         format: 'cjs',
         globals,
@@ -82,8 +90,7 @@ export default [
   },
   {
     ...prodBase,
-    output: [
-      {
+    output: [{
         file: distFile(`${fileName}.min.js`),
         format: 'cjs',
         globals,
