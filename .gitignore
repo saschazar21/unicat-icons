@@ -2,8 +2,9 @@
 build/
 dist/
 
-# Ignore copied README.md
-pages/README.md
+# Ignore Next.js directories (created automatically)
+components/
+pages/
 
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node
