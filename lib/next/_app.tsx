@@ -1,6 +1,8 @@
 import React from "react";
 import App, { Container } from "next/app";
 
+import 'highlight.js/styles/a11y-dark.css';
+
 declare module "react" {
   interface StyleHTMLAttributes<T> extends React.HTMLAttributes<T> {
     jsx?: boolean;
@@ -71,21 +73,22 @@ const Layout = ({ children = {}, ...otherProps }) => (
         display: inline-block;
         font-family: "Fira Mono", monospace;
         border-radius: 4px;
-        background-color: #f0f0f0;
+        background-color: #2b2b2b;
+        color: #f8f8f2;
         padding: 0.5em;
         margin: 0.25em;
       }
 
       pre {
         border-radius: 4px;
-        background-color: #f0f0f0;
+        background-color: #2b2b2b;
         padding: 1.25em;
         max-width: 100%;
         overflow: auto;
       }
 
       blockquote {
-        background-color: #f0f0f0;
+        background-color: #f8f8f8;
         border-left: 8px solid darkgrey;
         padding: 1.25em;
         margin: 1em 0 2em 0;
