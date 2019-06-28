@@ -16,6 +16,7 @@
     "paths": {
       "*": ["build/*", "node_modules/*"]
     },
+    "resolveJsonModule": true,
     "rootDir": "./build",
     "sourceMap": true,
     "strict": true,
