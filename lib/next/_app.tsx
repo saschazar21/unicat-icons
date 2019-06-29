@@ -1,18 +1,18 @@
-import React, { Fragment } from 'react';
-import App, { Container } from 'next/app';
-import Link from 'next/link';
+import React, { Fragment } from "react";
+import App, { Container } from "next/app";
+import Link from "next/link";
 
-import pkg from '../package.json';
-import paths from './paths.json';
+import pkg from "../package.json";
+import paths from "./paths.json";
 
-import 'highlight.js/styles/a11y-dark.css';
+import "highlight.js/styles/a11y-dark.css";
 
-const getAuthor = () => {
+export const getAuthor = () => {
   if (!pkg || !pkg.author) {
     return null;
   }
 
-  if (typeof pkg.author === 'string') {
+  if (typeof pkg.author === "string") {
     const result = pkg.author.match(/^[^<>\(\)]+/);
     if (result && result[0]) {
       return result[0].trim();
@@ -20,14 +20,14 @@ const getAuthor = () => {
     return null;
   }
 
-  if (typeof pkg.author === 'object') {
+  if (typeof pkg.author === "object") {
     return pkg.author.name;
   }
 
   return null;
 };
 
-declare module 'react' {
+declare module "react" {
   interface StyleHTMLAttributes<T> extends React.HTMLAttributes<T> {
     jsx?: boolean;
     global?: boolean;
@@ -45,7 +45,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
 
         body {
           background-color: white;
-          font-family: 'Open Sans', sans-serif;
+          font-family: "Open Sans", sans-serif;
           font-weight: 400;
           line-height: 1.45;
           color: #333;
@@ -62,7 +62,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
         h4,
         h5 {
           margin: 2.75rem 0 1rem;
-          font-family: 'Open Sans', sans-serif;
+          font-family: "Open Sans", sans-serif;
           font-weight: 400;
           line-height: 1.15;
         }
@@ -97,7 +97,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
         code {
           -webkit-font-smoothing: antialiased;
           display: inline-block;
-          font-family: 'Fira Mono', monospace;
+          font-family: "Fira Mono", monospace;
           border-radius: 4px;
           background-color: #2b2b2b;
           color: #f8f8f8;
@@ -154,20 +154,20 @@ const Layout = ({ children = {}, ...otherProps }) => (
         )}
       </nav>
       <strong className="description">
-        {pkg.name} - v{pkg.version}
+        {pkg.name} v{pkg.version}
       </strong>
       {getAuthor() && (
-        <span className="description">
-          Copyright (c) {getAuthor()}, licensed under the{' '}
-          {paths.indexOf('license') >= 0 ? (
+        <small className="description">
+          Copyright (c) {getAuthor()}, licensed under the{" "}
+          {paths.indexOf("license") >= 0 ? (
             <Link href="/license">
               <a>{pkg.license}</a>
             </Link>
           ) : (
             <strong>pkg.license</strong>
-          )}{' '}
+          )}{" "}
           license.
-        </span>
+        </small>
       )}
       <style jsx>{`
         footer {
