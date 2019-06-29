@@ -7,6 +7,26 @@ import paths from './paths.json';
 
 import 'highlight.js/styles/a11y-dark.css';
 
+const getAuthor = () => {
+  if (!pkg || !pkg.author) {
+    return null;
+  }
+
+  if (typeof pkg.author === 'string') {
+    const result = pkg.author.match(/^[^<>\(\)]+/);
+    if (result && result[0]) {
+      return result[0].trim();
+    }
+    return null;
+  }
+
+  if (typeof pkg.author === 'object') {
+    return pkg.author.name;
+  }
+
+  return null;
+};
+
 declare module 'react' {
   interface StyleHTMLAttributes<T> extends React.HTMLAttributes<T> {
     jsx?: boolean;
@@ -115,7 +135,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
     </main>
     <footer>
       <nav aria-labelledby="footer-navigation">
-        <strong id="footer-navigation">Navigation</strong>
+        <strong id="footer-navigation">Navigation:</strong>
         {paths && paths.length && (
           <ul>
             <li>
@@ -136,6 +156,19 @@ const Layout = ({ children = {}, ...otherProps }) => (
       <strong className="description">
         {pkg.name} - v{pkg.version}
       </strong>
+      {getAuthor() && (
+        <span className="description">
+          Copyright (c) {getAuthor()}, licensed under the{' '}
+          {paths.indexOf('license') >= 0 ? (
+            <Link href="/license">
+              <a>{pkg.license}</a>
+            </Link>
+          ) : (
+            <strong>pkg.license</strong>
+          )}{' '}
+          license.
+        </span>
+      )}
       <style jsx>{`
         footer {
           background: #2b2b2b;
@@ -160,12 +193,23 @@ const Layout = ({ children = {}, ...otherProps }) => (
 
         a {
           color: inherit;
+          border-bottom: 1px solid transparent;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          text-decoration: none;
+          padding: 0 0.25em;
         }
 
         a:hover,
         a:focus,
         a:visited {
           color: lightgrey;
+          border-bottom-color: lightgrey;
+        }
+
+        a:focus {
+          outline: 1px solid yellow;
+          box-shadow: 0 0 10px -1px yellow;
         }
 
         .description {

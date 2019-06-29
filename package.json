@@ -18,7 +18,7 @@
     "docs:build": "npm run docs:prepare && next build"
   },
   "repository": "https://github.com/saschazar21/unicat-icons",
-  "author": "Sascha Zarhuber <sascha.zarhuber@gmail.com>",
+  "author": "Sascha Zarhuber <sascha.zarhuber@gmail.com> (https://sascha.work/)",
   "license": "MIT",
   "private": false,
   "peerDependencies": {
