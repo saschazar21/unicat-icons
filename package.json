@@ -21,6 +21,15 @@
   "author": "Sascha Zarhuber <sascha.zarhuber@gmail.com> (https://sascha.work/)",
   "license": "MIT",
   "private": false,
+  "keywords": [
+    "icon",
+    "svg",
+    "react",
+    "react-native",
+    "react-sketchapp",
+    "sketch",
+    "typescript"
+  ],
   "peerDependencies": {
     "react": "^16.8.6",
     "react-native": "^0.59.9",

@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import App, { Container } from "next/app";
+import Head from "next/head";
 import Link from "next/link";
 
 import pkg from "../package.json";
@@ -249,9 +250,25 @@ export default class Unicat extends App {
 
   public render() {
     const { Component, pageProps } = this.props;
+    const author = getAuthor();
 
     return (
       <Container>
+        <Head>
+          <title>
+            {pkg.name} {author && `by ${author}`}
+          </title>
+          {author && <meta name="author" content={author} />}
+          {Array.isArray(pkg.keywords) && (
+            <meta name="keywords" content={pkg.keywords.join(",")} />
+          )}
+          <meta charSet="utf-8" />
+          <meta
+            name="description"
+            content={`${pkg.name} - ${pkg.description}`}
+          />
+          <meta name="application-name" content={pkg.name} />
+        </Head>
         <Layout>
           <Component {...pageProps} />
         </Layout>
