@@ -1,6 +1,7 @@
 .rpt2_cache/
 build/
 dist/
+out/
 
 # Ignore Next.js directories (created automatically)
 components/

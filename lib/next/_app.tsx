@@ -8,7 +8,7 @@ import paths from "./paths.json";
 
 import "highlight.js/styles/a11y-dark.css";
 
-export const getAuthor = () => {
+const getAuthor = () => {
   if (!pkg || !pkg.author) {
     return null;
   }
@@ -35,8 +35,116 @@ declare module "react" {
   }
 }
 
+const Navigation = () => (
+  <div className="nav-wrapper">
+    <nav aria-labelledby="footer-navigation">
+      <strong id="footer-navigation">Navigation:</strong>
+      {paths && paths.length && (
+        <ul>
+          <li>
+            <Link href="/">
+              <a>Index</a>
+            </Link>
+          </li>
+          {paths.map((p, i) => (
+            <li key={`link-${p}-${i}`}>
+              <Link href={`/${p}`}>
+                <a>{p}</a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </nav>
+    <Link href={pkg.repository}><a>Fork on GitHub</a></Link>
+    <style jsx>{`
+      nav {
+        display: flex;
+        flex-direction: column;
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      a {
+        color: inherit;
+        border-bottom: 1px solid transparent;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        padding: 0 0.25em;
+      }
+
+      a:hover,
+      a:focus,
+      a:visited {
+        color: inherit;
+        border-bottom-color: lightgrey;
+      }
+
+      a:focus {
+        outline: 1px solid yellow;
+        box-shadow: 0 0 10px -1px yellow;
+      }
+      
+      .nav-wrapper {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        line-height: 2em;
+        max-width: 840px;
+        margin: 0 auto;
+      }
+
+      @media screen and (min-width: 768px) {
+        nav {
+          flex-direction: row;
+        }
+
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        strong,
+        li {
+          margin-right: 1em;
+        }
+        
+        .nav-wrapper {
+          line-height: inherit;
+        }
+      }
+    `}</style>
+  </div>
+);
+
 const Layout = ({ children = {}, ...otherProps }) => (
   <Fragment>
+    <header>
+      <strong>{pkg.name} v{pkg.version}</strong>
+      <Link href={pkg.repository}><a>Fork on GitHub</a></Link>
+      <style jsx>{`
+        header {
+          display: flex;
+          justify-content: space-between;
+          padding: 2em;
+          margin: 0 auto;
+          max-width: 840px;
+        }
+        
+        a {
+          display: block;
+          color: inherit;
+          text-decoration: none;
+          margin-left: 1em;
+        }
+      `}</style>
+    </header>
     <main {...otherProps}>
       {children}
       <style jsx global>{`
@@ -88,6 +196,26 @@ const Layout = ({ children = {}, ...otherProps }) => (
         h5 {
           font-size: 1.25em;
         }
+        
+        a {
+          border-bottom: 1px solid transparent;
+          text-transform: none;
+          letter-spacing: 0.1em;
+          text-decoration: none;
+          padding: 0 0.25em;
+        }
+
+        a:hover,
+        a:focus,
+        a:visited {
+          color: #808080;
+          border-bottom-color: #808080;
+        }
+
+        a:focus {
+          outline: 1px solid goldenrod;
+          box-shadow: 0 0 10px -1px goldenrod;
+        }
 
         small,
         code,
@@ -116,7 +244,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
 
         blockquote {
           background-color: #f8f8f8;
-          border-left: 8px solid darkgrey;
+          border-left: 8px solid #808080;
           padding: 1.25em;
           margin: 1em 0 2em 0;
           line-height: 1.45em;
@@ -128,6 +256,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
       `}</style>
       <style jsx>{`
         main {
+          background: white;
           padding: 2em;
           margin: 0 auto;
           max-width: 840px;
@@ -135,25 +264,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
       `}</style>
     </main>
     <footer>
-      <nav aria-labelledby="footer-navigation">
-        <strong id="footer-navigation">Navigation:</strong>
-        {paths && paths.length && (
-          <ul>
-            <li>
-              <Link href="/">
-                <a>Index</a>
-              </Link>
-            </li>
-            {paths.map((p, i) => (
-              <li key={`link-${p}-${i}`}>
-                <Link href={`/${p}`}>
-                  <a>{p}</a>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </nav>
+      <Navigation />
       <strong className="description">
         {pkg.name} v{pkg.version}
       </strong>
@@ -165,8 +276,8 @@ const Layout = ({ children = {}, ...otherProps }) => (
               <a>{pkg.license}</a>
             </Link>
           ) : (
-            <strong>pkg.license</strong>
-          )}{" "}
+              <strong>pkg.license</strong>
+            )}{" "}
           license.
         </small>
       )}
@@ -174,65 +285,18 @@ const Layout = ({ children = {}, ...otherProps }) => (
         footer {
           background: #2b2b2b;
           color: #f8f8f8;
-          border-top: 4px solid darkgrey;
+          border-top: 4px solid #808080;
           padding: 2em;
         }
-
-        nav {
-          display: flex;
-          flex-direction: column;
-          line-height: 2em;
-          max-width: 840px;
-          margin: 0 auto;
-        }
-
-        ul {
-          list-style-type: none;
-          padding-left: 0;
-          margin: 0;
-        }
-
+        
         a {
           color: inherit;
-          border-bottom: 1px solid transparent;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          text-decoration: none;
-          padding: 0 0.25em;
-        }
-
-        a:hover,
-        a:focus,
-        a:visited {
-          color: lightgrey;
-          border-bottom-color: lightgrey;
-        }
-
-        a:focus {
-          outline: 1px solid yellow;
-          box-shadow: 0 0 10px -1px yellow;
         }
 
         .description {
           display: block;
           text-align: center;
           margin: 2em 1em auto;
-        }
-
-        @media screen and (min-width: 768px) {
-          nav {
-            flex-direction: row;
-          }
-
-          ul {
-            display: flex;
-            flex-wrap: wrap;
-          }
-
-          strong,
-          li {
-            margin-right: 1em;
-          }
         }
       `}</style>
     </footer>
