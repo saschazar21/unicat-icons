@@ -28,6 +28,20 @@ const getAuthor = () => {
   return null;
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org/',
+  '@type': 'Code',
+  name: pkg.name,
+  version: pkg.version,
+  text: pkg.description,
+  keywords: pkg.keywords.join(','),
+  author: {
+    '@type': 'Person',
+    name: getAuthor(),
+  },
+  url: pkg.repository
+};
+
 declare module "react" {
   interface StyleHTMLAttributes<T> extends React.HTMLAttributes<T> {
     jsx?: boolean;
@@ -332,6 +346,7 @@ export default class Unicat extends App {
             content={`${pkg.name} - ${pkg.description}`}
           />
           <meta name="application-name" content={pkg.name} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         </Head>
         <Layout>
           <Component {...pageProps} />
