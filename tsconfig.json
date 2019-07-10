@@ -2,9 +2,8 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "baseUrl": "./build",
-    "declaration": true,
     "esModuleInterop": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -23,7 +22,14 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "esnext"
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true
   },
-  "include": ["build", "types"]
+  "include": ["build", "types"],
+  "exclude": ["node_modules"]
 }

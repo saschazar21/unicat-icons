@@ -1,43 +1,46 @@
-import {
-  resolve
-} from 'path';
-import builtins from 'builtin-modules';
-import autoprefixer from 'autoprefixer';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import filesize from 'rollup-plugin-filesize';
-import postcss from 'rollup-plugin-postcss';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import {
-  terser
-} from 'rollup-plugin-terser';
-import typescript from 'rollup-plugin-typescript2';
+import { resolve } from "path";
+import builtins from "builtin-modules";
+import autoprefixer from "autoprefixer";
+import babel from "rollup-plugin-babel";
+import commonjs from "rollup-plugin-commonjs";
+import filesize from "rollup-plugin-filesize";
+import postcss from "rollup-plugin-postcss";
+import nodeResolve from "rollup-plugin-node-resolve";
+import { terser } from "rollup-plugin-terser";
+import typescript from "rollup-plugin-typescript2";
 
-import pkg from './package.json';
+import pkg from "./package.json";
 
-const {
-  buildDir,
-  distDir
-} = require('./lib/paths');
+const { buildDir, distDir } = require("./lib/paths");
 
 const distFile = file => resolve(distDir, `./${file}`);
 
-const fileName = `./${process.env.TARGET === 'web' ? 'index' : process.env.TARGET}`;
+const fileName = `./${
+  process.env.TARGET === "web" ? "index" : process.env.TARGET
+}`;
 
 const external = [
   ...builtins,
-  'react',
-  'classnames',
-  'react-native',
-  'react-native-svg',
-  'react-sketchapp',
+  "react",
+  "classnames",
+  "react-native",
+  "react-native-svg",
+  "react-sketchapp"
 ];
 
 const globals = {
-  classnames: 'classnames',
-  react: 'React',
-  'react-native-svg': 'Svg',
-  'react-sketchapp': 'sketchSvg',
+  classnames: "classnames",
+  react: "React",
+  "react-native-svg": "Svg",
+  "react-sketchapp": "sketchSvg"
+};
+
+const tsconfigOverride = {
+  compilerOptions: {
+    allowJs: false,
+    declaration: true,
+    isolatedModules: false
+  }
 };
 
 const base = {
@@ -46,66 +49,72 @@ const base = {
   plugins: [
     nodeResolve(),
     commonjs({
-      include: /node_modules/,
+      include: /node_modules/
     }),
-    typescript(),
+    typescript({
+      tsconfig: "tsconfig.json",
+      tsconfigOverride: tsconfigOverride
+    }),
     babel({
-      extensions: ['.ts', '.tsx'],
-      runtimeHelpers: true,
+      extensions: [".ts", ".tsx"],
+      runtimeHelpers: true
     }),
     postcss({
       minimize: true,
       modules: {
-        generateScopedName: '[name]__[local]___[md5:hash:hex:4]',
+        generateScopedName: "[name]__[local]___[md5:hash:hex:4]"
       },
-      plugins: [autoprefixer()],
-    }),
-  ],
+      plugins: [autoprefixer()]
+    })
+  ]
 };
 
 const prodBase = {
   ...base,
-  plugins: [...base.plugins, terser(), filesize()],
+  plugins: [...base.plugins, terser(), filesize()]
 };
 
-export default [{
+export default [
+  {
     ...base,
-    output: [{
+    output: [
+      {
         file: distFile(`${fileName}.js`),
-        format: 'cjs',
-        globals,
+        format: "cjs",
+        globals
       },
       {
         file: distFile(`${fileName}.es.js`),
-        format: 'es',
-        globals,
+        format: "es",
+        globals
       },
       {
         file: distFile(`${fileName}.umd.js`),
-        format: 'umd',
+        format: "umd",
         globals,
-        name: `${pkg.name} v${parseInt(pkg.version, 10)}`,
-      },
-    ],
+        name: `${pkg.name} v${parseInt(pkg.version, 10)}`
+      }
+    ]
   },
   {
     ...prodBase,
-    output: [{
+    output: [
+      {
         file: distFile(`${fileName}.min.js`),
-        format: 'cjs',
-        globals,
+        format: "cjs",
+        globals
       },
       {
         file: distFile(`${fileName}.es.min.js`),
-        format: 'es',
-        globals,
+        format: "es",
+        globals
       },
       {
         file: distFile(`${fileName}.umd.min.js`),
-        format: 'umd',
+        format: "umd",
         globals,
-        name: `${pkg.name} v${parseInt(pkg.version, 10)}`,
-      },
-    ],
-  },
+        name: `${pkg.name} v${parseInt(pkg.version, 10)}`
+      }
+    ]
+  }
 ];
