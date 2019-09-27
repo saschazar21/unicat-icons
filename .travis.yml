@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - 10
+jobs:
+  include:
+    - stage: build
+      script: "yarn build"
+    - stage: docs
+      script: "yarn docs"
+stages:
+  - build
+  - docs
+deploy:
+  - provider: npm
+    # email:
+    # api_key:
+    on:
+      tags: true

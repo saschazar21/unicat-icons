@@ -4,8 +4,8 @@
 
 ## Prerequisites
 
-* [React](https://www.npmjs.com/package/react) v16.8 and up, or
-* [React Native](https://www.npmjs.com/package/react-native) v59.9 and up, or
+* [React](https://www.npmjs.com/package/react) v16.9 and up, or
+* [React Native](https://www.npmjs.com/package/react-native) v0.61.1 and up, or
 * [react-sketchapp](https://www.npmjs.com/package/react-sketchapp) v3.0.0-beta.9 and up
 * optionally a working [TypeScript](https://www.npmjs.com/package/typescript) setup
 
