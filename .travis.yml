@@ -1,15 +1,7 @@
 language: node_js
 node_js:
   - 10
-jobs:
-  include:
-    - stage: build
-      script: "yarn build"
-    - stage: docs
-      script: "yarn docs"
-stages:
-  - build
-  - docs
+script: yarn build && yarn docs:build
 deploy:
   - provider: npm
     skip_cleanup: true
