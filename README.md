@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/saschazar21/unicat-icons.svg?branch=master)](https://travis-ci.org/saschazar21/unicat-icons)
 # :unicorn: :cat2: Unicat icons
 
 > a collection of `.svg` icons for [React](https://reactjs.org/), [React Native](https://facebook.github.io/react-native/) and [react-sketchapp](http://airbnb.io/react-sketchapp/) with **TypeScript** support.
