@@ -23,4 +23,5 @@ const plugins = [
 
 module.exports = withPlugins([...plugins], {
   // enter config here
+  exportTrailingSlash: true
 });

@@ -62,7 +62,7 @@ const Navigation = () => (
           </li>
           {paths.map((p, i) => (
             <li key={`link-${p}-${i}`}>
-              <Link href={`/${p.toUpperCase()}.html`}>
+              <Link href={`/${p.toUpperCase()}`}>
                 <a>{p}</a>
               </Link>
             </li>
@@ -292,7 +292,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
         <small className="description">
           Copyright (c) {getAuthor()}, licensed under the{" "}
           {paths.indexOf("license") >= 0 ? (
-            <Link href="/LICENSE.html">
+            <Link href="/LICENSE">
               <a>{pkg.license}</a>
             </Link>
           ) : (
