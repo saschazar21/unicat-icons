@@ -15,7 +15,7 @@
     "build": "npm run build:prepare && npm run build:compile && npm run build:copy",
     "docs:prepare": "node lib/docs",
     "docs": "npm run docs:prepare && next",
-    "docs:build": "npm run docs:prepare && next build"
+    "docs:build": "npm run docs:prepare && next build && next export"
   },
   "repository": "https://github.com/saschazar21/unicat-icons",
   "author": "Sascha Zarhuber <sascha.zarhuber@gmail.com> (https://sascha.work/)",

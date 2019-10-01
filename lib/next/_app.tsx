@@ -29,15 +29,15 @@ const getAuthor = () => {
 };
 
 const jsonLd = {
-  '@context': 'https://schema.org/',
-  '@type': 'Code',
+  "@context": "https://schema.org/",
+  "@type": "Code",
   name: pkg.name,
   version: pkg.version,
   text: pkg.description,
-  keywords: pkg.keywords.join(','),
+  keywords: pkg.keywords.join(","),
   author: {
-    '@type': 'Person',
-    name: getAuthor(),
+    "@type": "Person",
+    name: getAuthor()
   },
   url: pkg.repository
 };
@@ -62,7 +62,7 @@ const Navigation = () => (
           </li>
           {paths.map((p, i) => (
             <li key={`link-${p}-${i}`}>
-              <Link href={`/${p}`}>
+              <Link href={`/${p.toUpperCase()}.html`}>
                 <a>{p}</a>
               </Link>
             </li>
@@ -70,7 +70,9 @@ const Navigation = () => (
         </ul>
       )}
     </nav>
-    <Link href={pkg.repository}><a>Fork on GitHub</a></Link>
+    <Link href={pkg.repository}>
+      <a>Fork on GitHub</a>
+    </Link>
     <style jsx>{`
       nav {
         display: flex;
@@ -103,7 +105,7 @@ const Navigation = () => (
         outline: 1px solid yellow;
         box-shadow: 0 0 10px -1px yellow;
       }
-      
+
       .nav-wrapper {
         display: flex;
         align-items: flex-end;
@@ -128,7 +130,7 @@ const Navigation = () => (
         li {
           margin-right: 1em;
         }
-        
+
         .nav-wrapper {
           line-height: inherit;
         }
@@ -140,8 +142,12 @@ const Navigation = () => (
 const Layout = ({ children = {}, ...otherProps }) => (
   <Fragment>
     <header>
-      <strong>{pkg.name} v{pkg.version}</strong>
-      <Link href={pkg.repository}><a>Fork on GitHub</a></Link>
+      <strong>
+        {pkg.name} v{pkg.version}
+      </strong>
+      <Link href={pkg.repository}>
+        <a>Fork on GitHub</a>
+      </Link>
       <style jsx>{`
         header {
           display: flex;
@@ -150,7 +156,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
           margin: 0 auto;
           max-width: 840px;
         }
-        
+
         a {
           display: block;
           color: inherit;
@@ -210,7 +216,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
         h5 {
           font-size: 1.25em;
         }
-        
+
         a {
           border-bottom: 1px solid transparent;
           text-transform: none;
@@ -286,12 +292,12 @@ const Layout = ({ children = {}, ...otherProps }) => (
         <small className="description">
           Copyright (c) {getAuthor()}, licensed under the{" "}
           {paths.indexOf("license") >= 0 ? (
-            <Link href="/license">
+            <Link href="/LICENSE.html">
               <a>{pkg.license}</a>
             </Link>
           ) : (
-              <strong>pkg.license</strong>
-            )}{" "}
+            <strong>pkg.license</strong>
+          )}{" "}
           license.
         </small>
       )}
@@ -302,7 +308,7 @@ const Layout = ({ children = {}, ...otherProps }) => (
           border-top: 4px solid #808080;
           padding: 2em;
         }
-        
+
         a {
           color: inherit;
         }
@@ -318,14 +324,6 @@ const Layout = ({ children = {}, ...otherProps }) => (
 );
 
 export default class Unicat extends App {
-  static async getInitialProps({ Component, ctx }) {
-    if (Component.getInitialProps) {
-      return Component.getInitialProps(ctx);
-    }
-
-    return {};
-  }
-
   public render() {
     const { Component, pageProps } = this.props;
     const author = getAuthor();
@@ -346,7 +344,10 @@ export default class Unicat extends App {
             content={`${pkg.name} - ${pkg.description}`}
           />
           <meta name="application-name" content={pkg.name} />
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
         </Head>
         <Layout>
           <Component {...pageProps} />
