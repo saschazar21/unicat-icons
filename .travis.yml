@@ -7,15 +7,15 @@ deploy:
     skip_cleanup: true
     access: public
     src: ./dist
-    # email:
-    # api_key:
+    email: $NPM_EMAIL
+    api_key: $NPM_API_TOKEN
     on:
       tags: true
   - provider: surge
     skip_cleanup: true
     project: ./out
-    # login:
-    # token:
-    # domain:
+    login: $SURGE_LOGIN
+    token: $SURGE_TOKEN
+    domain: $SURGE_DOMAIN
     on:
       tags: true
