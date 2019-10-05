@@ -1,6 +1,6 @@
 {
   "name": "@saschazar/unicat-icons",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An SVG collection for React, React Native and react-sketchapp",
   "main": "index.min.js",
   "module": "index.es.min.js",
