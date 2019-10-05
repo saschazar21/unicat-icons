@@ -35,6 +35,6 @@ then
   npm publish --access public --dry-run
 else
   echo "Deploying to npm..."
-  npm publish --access public --tag $TRAVIS_TAG
+  npm publish --access public
 fi
 echo "Done!"
