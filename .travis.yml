@@ -5,12 +5,25 @@ script:
   - yarn build
   - yarn docs:build
 deploy:
-  - provider: npm
+  - provider: script
     skip_cleanup: true
-    access: public
-    src: dist
-    email: $NPM_EMAIL
-    api_key: $NPM_API_TOKEN
+    script:
+      - echo "[DRY RUN] Attempting to deploy $TRAVIS_TAG to npm"
+      - echo "//registry.npmjs.org/:_authToken=${NPM_API_TOKEN}" > ~/.npmrc
+      - echo "//registry.npmjs.org/:email=${NPM_EMAIL}" >> ~/.npmrc
+      - cd dist/
+      - npm publish --access public --dry-run
+    on:
+      branch: master
+      tags: false
+  - provider: script
+    skip_cleanup: true
+    script:
+      - echo "Attempting to deploy $TRAVIS_TAG to npm"
+      - echo "//registry.npmjs.org/:_authToken=${NPM_API_TOKEN}" > ~/.npmrc
+      - echo "//registry.npmjs.org/:email=${NPM_EMAIL}" >> ~/.npmrc
+      - cd dist/
+      - npm publish --access public --tag $TRAVIS_TAG
     on:
       tags: true
   - provider: surge
