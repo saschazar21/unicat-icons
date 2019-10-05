@@ -1,19 +1,21 @@
 language: node_js
 node_js:
   - 10
-script: yarn build && yarn docs:build
+script: 
+  - yarn build
+  - yarn docs:build
 deploy:
   - provider: npm
     skip_cleanup: true
     access: public
-    src: ./dist
+    src: dist
     email: $NPM_EMAIL
     api_key: $NPM_API_TOKEN
     on:
       tags: true
   - provider: surge
     skip_cleanup: true
-    project: ./out
+    project: out
     login: $SURGE_LOGIN
     token: $SURGE_TOKEN
     domain: $SURGE_DOMAIN
