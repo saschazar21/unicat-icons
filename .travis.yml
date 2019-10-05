@@ -7,23 +7,13 @@ script:
 deploy:
   - provider: script
     skip_cleanup: true
-    script:
-      - echo "[DRY RUN] Attempting to deploy $TRAVIS_TAG to npm"
-      - echo "//registry.npmjs.org/:_authToken=${NPM_API_TOKEN}" > ~/.npmrc
-      - echo "//registry.npmjs.org/:email=${NPM_EMAIL}" >> ~/.npmrc
-      - cd dist/
-      - npm publish --access public --dry-run
+    script: bash lib/deploy-npm.sh dry
     on:
       branch: master
       tags: false
   - provider: script
     skip_cleanup: true
-    script:
-      - echo "Attempting to deploy $TRAVIS_TAG to npm"
-      - echo "//registry.npmjs.org/:_authToken=${NPM_API_TOKEN}" > ~/.npmrc
-      - echo "//registry.npmjs.org/:email=${NPM_EMAIL}" >> ~/.npmrc
-      - cd dist/
-      - npm publish --access public --tag $TRAVIS_TAG
+    script: bash lib/deploy-npm.sh
     on:
       tags: true
   - provider: surge
