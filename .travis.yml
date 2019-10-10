@@ -3,36 +3,31 @@ language: node_js
 node_js:
   - lts/dubnium
 
-jobs:
-  include:
-    - stage: build
-      name: "Builds and deploys project to npm"
-      script: yarn build
-      deploy:
-        - provider: npm
-          email: $NPM_EMAIL
-          api_token: $NPM_API_TOKEN
-          src: ./dist/
-          edge: true
-          dry_run: true
-          on:
-            branch: master
-        - provider: npm
-          email: $NPM_EMAIL
-          api_token: $NPM_API_TOKEN
-          src: ./dist/
-          edge: true
-          on:
-            tags: true
-    - stage: docs
-      name: "Builds and deploys documentation to surge.sh"
-      script: yarn docs:build
-      deploy:
-        provider: surge
-        project: ./out/
-        login: $SURGE_LOGIN
-        token: $SURGE_TOKEN
-        domain: $SURGE_DOMAIN
-        edge: true
-        on:
-          tags: true
+script:
+  - yarn build
+  - yarn build:docs
+
+deploy:
+  - provider: npm
+    email: $NPM_EMAIL
+    api_token: $NPM_API_TOKEN
+    src: ./dist/
+    edge: true
+    dry_run: true
+    on:
+      branch: master
+  - provider: npm
+    email: $NPM_EMAIL
+    api_token: $NPM_API_TOKEN
+    src: ./dist/
+    edge: true
+    on:
+      tags: true
+  - provider: surge
+    project: ./out/
+    login: $SURGE_LOGIN
+    token: $SURGE_TOKEN
+    domain: $SURGE_DOMAIN
+    edge: true
+    on:
+      tags: true
